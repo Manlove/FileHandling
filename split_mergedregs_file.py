@@ -4,12 +4,14 @@
 # a "genes" file with genes and the nearest peaks and outputs a split file with the
 # genes from the mergedregs file on seperate lines. Will duplicate peaks regions
 
-# input files
-file_in_path = "mergedregs.txt"
-file_out_path = "split_file.txt"
-gene_file_path = "genes.txt"
+from typing import Dict
 
-def GetGeneData(gene_file_path, gene_name_to_symbol):
+# input files
+FILE_IN_PATH: str = "mergedregs.txt"
+FILE_OUT_PATH: str = "split_file.txt"
+GENE_FILE_PATH: str = "genes.txt"
+
+def GetGeneData(gene_file_path: str, gene_name_to_symbol: Dict[str,str]) -> None:
     '''Steps through the gene file and saves the gene names and matching gene symbols'''
     with open(gene_file_path, 'r') as gene_file:
         next(gene_file)
@@ -17,7 +19,7 @@ def GetGeneData(gene_file_path, gene_name_to_symbol):
             line = line.strip().split("\t")
             gene_name_to_symbol[line[1].strip().upper()] = line[0]
 
-def SplitMergedRegsFile(file_in_path, file_out_path, gene_name_to_symbol):
+def SplitMergedRegsFile(file_in_path: str, file_out_path: str, gene_name_to_symbol: Dict[str,str]) -> None:
     '''Splits the merged regions table with single genes on each line'''
     with open(file_in_path, 'r') as file_in:
         with open(file_out_path, 'w') as file_out:
@@ -66,7 +68,7 @@ def SplitMergedRegsFile(file_in_path, file_out_path, gene_name_to_symbol):
                         
 
 if __name__ == "__main__":
-    gene_name_to_symbol = {}
-    GetGeneData(gene_file_path, gene_name_to_symbol)
-    SplitMergedRegsFile(file_in_path, file_out_path, gene_name_to_symbol)
+    gene_name_to_symbol: Dict[str,str] = {}
+    GetGeneData(GENE_FILE_PATH, gene_name_to_symbol)
+    SplitMergedRegsFile(FILE_IN_PATH, FILE_OUT_PATH, gene_name_to_symbol)
 
